@@ -1,13 +1,13 @@
-{% load static %}
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <div>
-    <form>
+    <form id="loginForm">
         {% csrf_token %}
         <input name="nome" type="text" id="nome" placeholder="Digite Seu Nome">
         <input name="senha" type="password" id="senha" placeholder="Digite Sua Senha">
         <button type="submit">Entrar</button>
     </form>
+    <script src="{% static 'js/login.js' %}"> </script> 
 </div>
-{% <script src="{% static 'js/login.js' %}"> </script> %}
 {% endblock  %}
