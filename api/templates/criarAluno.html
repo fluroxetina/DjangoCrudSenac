@@ -1,5 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
-
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,16 +9,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="POST" id='alunoForm' >
-        <input type="text" placeholder="Nome" id='nome'>
-        <input type="senha" placeholder="senha" id='senha'>
+    <form id="alunoForm">
+        {% csrf_token %}
+        <input type="text" placeholder="Nome" id="nome">
+        <input type="password" placeholder="Senha" id="senha">
         <button type="submit">Cadastrar</button>
     </form>
 
-    <div class="msgErro" id="msg">
-
-    </div>
+    <div class="msgErro" id="msg"></div>
 
     <script src="{% static 'js/cadastrar.js' %}"></script>
 </body>
 </html>
+{% endblock %}
+
+

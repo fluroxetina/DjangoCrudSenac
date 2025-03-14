@@ -1,26 +1,18 @@
-async function enviarFormulario(evento){
-    evento.preventDefault()
+async function Cadastro(){
+
+    const nome = document.getElementById('nome').value
+    const senha = document.getElementById('senha').value
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+
+    const respnse = await apiFetch('/api/user', 'POST', {username:nome, password:senha}, {'X-CSRFToken':csrf})
+    console.log(respnse)
+
+    if(respnse.status == 404)
+    {
+        console.log(respnse)
+    }
     
-    var nome = document.getElementById('nome').value
-    var email = document.getElementById('email').value
-    var msg = document.getElementById('msg')
-
-    const resposta = await fetch('/api/alunos/', {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({nome: nome, email: email})
-    })
-
-    if(resposta.ok){
-        window.location.href = "/home"
-    }
-    else{
-        msg.innerHTML = 'Erro ao cadastrar'
-    }
-
-
 }
 
-var alunoForm = document.getElementById('alunoForm').addEventListener("submit", enviarFormulario)
+document.getElementById('alunoForm').addEventListener('submit', Cadastro)
