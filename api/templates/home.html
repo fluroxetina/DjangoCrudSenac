@@ -19,31 +19,6 @@
     {%  include "componente/listaAlunos.html" with usuarios=usuarios %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-      function deleteUser(userId) {
-        if (confirm('Tem certeza de que deseja deletar este usuário?')) {
-          fetch(`/api/user/${userId}/`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          .then(response => {
-            if (response.ok) {
-              // Se o delete for bem-sucedido, remova o elemento da lista
-              document.getElementById(`usuario-${userId}`).remove();
-              alert('Usuário deletado com sucesso!');
-            } else {
-              alert('Erro ao deletar usuário.');
-            }
-          })
-          .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao tentar deletar usuário.');
-          });
-        }
-      }
-    </script>
-    
+
   </body>
 </html>
