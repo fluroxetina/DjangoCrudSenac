@@ -2,10 +2,15 @@ from django.shortcuts import render, redirect
 from api.models import *
 
 def home(request):
+<<<<<<< HEAD
     
     if not request.user.is_authenticated:
         return redirect('login')
     
+=======
+    # if not request.user.is_authenticated:
+    #     return redirect('login')
+>>>>>>> 15124fa4ea3cc250ba2a5eaf187305ace6816158
     user = CustomUser.objects.all()
     return render(request, 'home.html', {'usuarios': user})
 
