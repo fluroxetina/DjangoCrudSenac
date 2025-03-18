@@ -1,18 +1,37 @@
-async function Cadastro(){
+async function Cadastro(evento){
+    evento.preventDefault()
+
 
     const nome = document.getElementById('nome').value
     const senha = document.getElementById('senha').value
-    const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    const id = parts[parts.length - 1];
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+    let response
 
-    const respnse = await apiFetch('/api/user', 'POST', {username:nome, password:senha}, {'X-CSRFToken':csrf})
-    console.log(respnse)
-
-    if(respnse.status == 404)
+    if(id)
     {
-        console.log(respnse)
+        response = await apiFetch(`/api/user/${id}`,"PUT",{username:nome, password:senha},{"X-CSRFToken": csrfToken})
     }
+    else
+    {
+        response = await apiFetch('/api/user', 'POST', {username:nome, password:senha}, {'X-CSRFToken':csrfToken})
+    }
+
+    if(response)
+    {
+        window.location.href = "/home"
+    }  
+    else
+    {
+        throw new Error('Erro ao tentar cadastrar o aluno.');
+    }      
+
+    
     
 }
 
 document.getElementById('alunoForm').addEventListener('submit', Cadastro)
+

@@ -27,6 +27,7 @@ class User(APIView):
     def post(self, request):
         nome = request.data.get('username')
         senha = request.data.get('password')
+        print("Dwadwa")
 
         if not nome or not senha:
             return Response({'error':'Todos os campos são obrigatorios.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -43,6 +44,12 @@ class User(APIView):
     
     def put(self, request, id):
         usuario = get_object_or_404(CustomUser, pk=id)
+        
+        senha = request.data.get('password', None)
+    
+        if senha and usuario.password != senha: 
+            request.data['password'] = make_password(senha)
+                    
         serializer = UserSerializer(usuario, data=request.data, partial=True)
         
         if serializer.is_valid():
@@ -51,6 +58,7 @@ class User(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, id):
+        
         usuario = get_object_or_404(CustomUser, pk=id)
         if usuario:
             usuario.delete()
@@ -72,4 +80,18 @@ class Login(APIView):
             return Response({"status": status.HTTP_200_OK})
         else:
             return Response({'mensagem': "Usuário não encontrado", "stauts": status.HTTP_401_UNAUTHORIZED})
+        
+
+class GetDadosUsuarioLogado(APIView):
+    def get(self, request):
+    
+        usuarioID = request.session.get('_auth_user_id')
+
+        if usuarioID:
+            usuario = CustomUser.objects.filter(id = usuarioID).first() 
+            serializers = UserSerializer(usuario)
+            return Response(serializers.data)
+        return Response(usuarioID)
+
+        
         

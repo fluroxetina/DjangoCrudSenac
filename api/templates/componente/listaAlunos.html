@@ -1,29 +1,29 @@
-{% load static%}
-<table class='table table-bordered'>
+<!-- listar_alunos.html -->
+{% load static %}
+{% csrf_token %}
+<table class="table table-bordered">
     <thead>
         <tr>
-            <td>ID</td>
-            <td>Nome</td>
-            <td>Senha</td>
-            <td>Ações</td>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ações</th>
         </tr>
     </thead>
-
-    <tbody>
-    {% for i in usuarios%}
-    <tr id="aluno-{{i.id}}">
-    <td > {{i.id}} </td>
-    <td> {{i.username}} </td>
-    <td> {{i.password}} </td>
-    <td>
-        <button class="btn btn-danger" onclick="deletar({{i.id}})">Deletar</button>
-        <button class="btn btn-primary">Editar</button>
-    </td>
-    </tr>
-    {% endfor%}
-
-
+    <tbody id="alunos-table">
+        {% for i in usuarios %}
+            <tr id="aluno-{{ i.id }}">
+                <td>{{ i.id }}</td>
+                <td>{{ i.username }}</td>
+                <td>{{ i.password }}</td>
+                <td>
+                    <button class="btn btn-danger" onclick="deletar({{ i.id }})">Deletar</button>
+                    <button class="btn btn-primary"><a href="/criarAluno/{{i.id}}">Editar</a></button>
+                </td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
+<script src="{% static 'js/listar.js' %}"></script>
 
 <script src="{% static 'js/listarAlunos.js'%}"></script>
